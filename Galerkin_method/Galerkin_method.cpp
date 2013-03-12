@@ -2,10 +2,23 @@
 //
 
 #include "stdafx.h"
+#include "Derivative.h"
+#include <iostream>
+
+
 
 
 int _tmain(int argc, _TCHAR* argv[])
-{
-	return 0;
-}
+  {
+  using std::cout;
+  using std::endl;
+
+  Derivative D(0.1);
+
+  auto f = [](double x){return x*x;};
+
+  cout << D(f,.5) << endl;
+
+  return 0;
+  }
 
