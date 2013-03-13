@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Galerkin_method.cpp" />
+    <ClCompile Include="Gaussian_intergation.cpp" />
     <ClCompile Include="Runge_Kutta_solver.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

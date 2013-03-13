@@ -62,5 +62,8 @@
     <ClCompile Include="Runge_Kutta_solver.cpp">
       <Filter>Diff_equation</Filter>
     </ClCompile>
+    <ClCompile Include="Gaussian_intergation.cpp">
+      <Filter>Integration</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

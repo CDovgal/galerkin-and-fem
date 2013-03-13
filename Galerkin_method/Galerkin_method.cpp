@@ -2,8 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "Derivative.h"
+
 #include <iostream>
+
+#include "Derivative.h"
+#include "Gausian_integration.h"
 
 
 
@@ -18,6 +21,9 @@ int _tmain(int argc, _TCHAR* argv[])
   auto f = [](double x){return x*x;};
 
   cout << D(f,.5) << endl;
+
+  Gaussian_integration I;
+  cout << I(f,-2,2) << endl;
 
   return 0;
   }
