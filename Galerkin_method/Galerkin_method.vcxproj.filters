@@ -16,6 +16,15 @@
     <Filter Include="Derivative">
       <UniqueIdentifier>{7aa13695-2bf6-421f-8427-780543aa086b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Integration">
+      <UniqueIdentifier>{31291377-637e-49e3-ac1b-a4b81cb86f85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Function">
+      <UniqueIdentifier>{ee0a96a1-9bc5-4242-a449-29123f419535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Diff_equation">
+      <UniqueIdentifier>{848f3c49-66d5-4cce-9941-e94c086d7dd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -30,6 +39,18 @@
     <ClInclude Include="Derivative.h">
       <Filter>Derivative</Filter>
     </ClInclude>
+    <ClInclude Include="Gausian_integration.h">
+      <Filter>Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="Function_vector.h">
+      <Filter>Function</Filter>
+    </ClInclude>
+    <ClInclude Include="Runge_Kutta_solver.h">
+      <Filter>Diff_equation</Filter>
+    </ClInclude>
+    <ClInclude Include="Typedefs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -37,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="Galerkin_method.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Runge_Kutta_solver.cpp">
+      <Filter>Diff_equation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
