@@ -15,8 +15,7 @@ class Function_vector
       {
       Vector result(func_vector.size());
 
-      std::transform(begin(func_vector), end(func_vector), begin(result),
-        [&i_vector] (const std::function<double (Vector)>& func)
+      std::transform(begin(func_vector), end(func_vector), begin(result), [&i_vector] (const std::function<double (Vector)>& func)
         {return func(i_vector);});
 
       return result;

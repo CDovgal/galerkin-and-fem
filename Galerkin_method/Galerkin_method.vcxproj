@@ -53,10 +53,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\ThirdParty\boost_1_53_0;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/wd4996 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\Projects\galerkin-and-fem\Galerkin_method\dislin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>discpp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,23 +78,37 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>D:\Projects\galerkin-and-fem\Galerkin_method\dislin;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>discpp.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ComplexIntegration.h" />
+    <ClInclude Include="D1Element.h" />
+    <ClInclude Include="D1Integrate.h" />
+    <ClInclude Include="D1Node.h" />
     <ClInclude Include="Derivative.h" />
+    <ClInclude Include="Determine.h" />
     <ClInclude Include="Function_vector.h" />
     <ClInclude Include="Gausian_integration.h" />
+    <ClInclude Include="InverseMatrix.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="NodeContainer.h" />
     <ClInclude Include="Runge_Kutta_solver.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Typedefs.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D1Element.cpp" />
+    <ClCompile Include="D1Integrate.cpp" />
+    <ClCompile Include="D1Node.cpp" />
     <ClCompile Include="Galerkin_method.cpp" />
     <ClCompile Include="Gaussian_intergation.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Runge_Kutta_solver.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

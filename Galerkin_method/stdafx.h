@@ -13,3 +13,11 @@
 
 
 // TODO: reference additional headers your program requires here
+#include <algorithm>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <math.h>
+#include <memory>
+#include <functional>

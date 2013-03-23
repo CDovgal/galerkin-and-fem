@@ -3,7 +3,10 @@
 Runge_Kutta_solver::Runge_Kutta_solver(const Matrix& i_A, const Vector& i_x0)
   : A(i_A)
   , x0(i_x0)
-  {}
+  {
+  for(size_t i = 0; i < x0.size(); ++i)
+    func_vector.add_function([] ( Vector ) {return 0;});
+  }
 
 Matrix Runge_Kutta_solver::get_solution(double step, size_t step_number)
   {
@@ -22,7 +25,7 @@ Matrix Runge_Kutta_solver::get_solution(double step, size_t step_number)
     Vector temp(solution.size1());
     for(size_t i = 0; i < temp.size(); ++i)
       temp(i) = solution(i,round-1);
-
+    cout << A.size1() << " " << A.size2() << " " << temp.size() << endl;
     Vector k1 = prod(A,temp)             + func_vector(temp);
     Vector k2 = prod(A,temp + step*k1/2) + func_vector(temp + step*k1/2);
     Vector k3 = prod(A,temp + step*k2/2) + func_vector(temp + step*k2/2);

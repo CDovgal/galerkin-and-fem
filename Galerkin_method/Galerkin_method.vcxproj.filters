@@ -25,6 +25,15 @@
     <Filter Include="Diff_equation">
       <UniqueIdentifier>{848f3c49-66d5-4cce-9941-e94c086d7dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{91456dd8-79ae-469f-b4a0-f56c00ee20fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Algo">
+      <UniqueIdentifier>{fcba03f3-ec2f-4672-9232-62f35d3b2845}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="D1Sample">
+      <UniqueIdentifier>{0298dffb-df29-4436-9c61-3dd722725d1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -51,6 +60,30 @@
     <ClInclude Include="Typedefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ComplexIntegration.h">
+      <Filter>Integration</Filter>
+    </ClInclude>
+    <ClInclude Include="InverseMatrix.h">
+      <Filter>Algo</Filter>
+    </ClInclude>
+    <ClInclude Include="Determine.h">
+      <Filter>Algo</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeContainer.h">
+      <Filter>geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="D1Node.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="D1Element.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="D1Integrate.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -64,6 +97,18 @@
     </ClCompile>
     <ClCompile Include="Gaussian_intergation.cpp">
       <Filter>Integration</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="D1Element.cpp">
+      <Filter>D1Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="D1Integrate.cpp">
+      <Filter>D1Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="D1Node.cpp">
+      <Filter>D1Sample</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
