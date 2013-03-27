@@ -45,44 +45,38 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Derivative.h">
+    <ClInclude Include="calculus\D1Integrate.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="calculus\Derivative.h">
       <Filter>Derivative</Filter>
     </ClInclude>
-    <ClInclude Include="Gausian_integration.h">
-      <Filter>Integration</Filter>
-    </ClInclude>
-    <ClInclude Include="Function_vector.h">
-      <Filter>Function</Filter>
-    </ClInclude>
-    <ClInclude Include="Runge_Kutta_solver.h">
+    <ClInclude Include="runge-kutta\Runge_Kutta_solver.h">
       <Filter>Diff_equation</Filter>
     </ClInclude>
-    <ClInclude Include="Typedefs.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="algorithm\InverseMatrix.h">
+      <Filter>Algo</Filter>
     </ClInclude>
-    <ClInclude Include="ComplexIntegration.h">
+    <ClInclude Include="algorithm\Build_function.h">
+      <Filter>Algo</Filter>
+    </ClInclude>
+    <ClInclude Include="runge-kutta\Function_vector.h">
+      <Filter>Function</Filter>
+    </ClInclude>
+    <ClInclude Include="finite_element\D1Element.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="finite_element\D1Node.h">
+      <Filter>D1Sample</Filter>
+    </ClInclude>
+    <ClInclude Include="calculus\Integrate.h">
       <Filter>Integration</Filter>
     </ClInclude>
-    <ClInclude Include="InverseMatrix.h">
-      <Filter>Algo</Filter>
+    <ClInclude Include="util\Typedefs.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Determine.h">
-      <Filter>Algo</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="NodeContainer.h">
-      <Filter>geometry</Filter>
-    </ClInclude>
-    <ClInclude Include="D1Node.h">
-      <Filter>D1Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="D1Element.h">
-      <Filter>D1Sample</Filter>
-    </ClInclude>
-    <ClInclude Include="D1Integrate.h">
-      <Filter>D1Sample</Filter>
+    <ClInclude Include="galerkin_method\wave_equation.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,23 +86,23 @@
     <ClCompile Include="Galerkin_method.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Runge_Kutta_solver.cpp">
+    <ClCompile Include="calculus\D1Integrate.cpp">
+      <Filter>D1Sample</Filter>
+    </ClCompile>
+    <ClCompile Include="runge-kutta\Runge_Kutta_solver.cpp">
       <Filter>Diff_equation</Filter>
     </ClCompile>
-    <ClCompile Include="Gaussian_intergation.cpp">
-      <Filter>Integration</Filter>
+    <ClCompile Include="algorithm\Build_function.cpp">
+      <Filter>Algo</Filter>
     </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>geometry</Filter>
-    </ClCompile>
-    <ClCompile Include="D1Element.cpp">
+    <ClCompile Include="finite_element\D1Element.cpp">
       <Filter>D1Sample</Filter>
     </ClCompile>
-    <ClCompile Include="D1Integrate.cpp">
+    <ClCompile Include="finite_element\D1Node.cpp">
       <Filter>D1Sample</Filter>
     </ClCompile>
-    <ClCompile Include="D1Node.cpp">
-      <Filter>D1Sample</Filter>
+    <ClCompile Include="galerkin_method\wave_equation.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

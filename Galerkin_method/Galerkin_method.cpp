@@ -3,42 +3,20 @@
 
 #include "stdafx.h"
 
-#include "Typedefs.h"
+#include "galerkin_method/wave_equation.h"
 
-#include "Derivative.h"
-#include "Gausian_integration.h"
-#include "Runge_Kutta_solver.h"
-#include "InverseMatrix.h"
+#include "calculus/Derivative.h"
 
-#include "D1Node.h"
-#include "D1Element.h"
-#include "D1Integrate.h"
+double Derivative::m_delta = 0.01;
 
-#include "dislin\discpp.h"
-
-using namespace std;
-
-double L = 10;
-double step = 0.5;
-double D1Integrate::m_step = step;
+using std::cout;
+using std::endl;
 
 int _tmain(int argc, _TCHAR* argv[])
   {
-  using boost::numeric::ublas::zero_matrix;
+  Wave_equation equation;
+  handle_init(equation);
 
-  std::vector<shared_ptr<D1Node>> node_container;
-  generate_node_container(0,L,0.5,node_container);
-
-  std::vector<shared_ptr<D1Element>> element_container;
-  generate_element_container(node_container,element_container);
-
-
-  debug_node_print(node_container);
-  debug_element_print(element_container);
-
-  cout << D1Integrate::Integrate_Ni_Nj(element_container[0], element_container[0]) << endl;
-
-
-
+  cout << equation.get_solution() << endl;
   return 0;
   }
