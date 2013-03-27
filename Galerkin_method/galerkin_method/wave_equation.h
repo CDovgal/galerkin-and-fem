@@ -31,7 +31,9 @@ class Wave_equation
 
     void init_doubles( double i_p_square,
                        double i_L,
-                       double i_step);
+                       double x_step,
+                       double t_step,
+                       size_t t_length);
 
     void init_function(const function_x_t& i_f_x_t,
                        const function_x& i_phi,
@@ -57,7 +59,9 @@ class Wave_equation
                                const matrix inverse_M) const;
     double p_square;
     double L;
-    double step;
+    double x_step;
+    double t_step;
+    size_t t_length;
     size_t elements_number;
 
     function_x_t f_x_t;

@@ -25,6 +25,7 @@ double D1Integrate::Integrate_Ni_Nj(const shared_ptr<D1Element>& N_i, const shar
     return 0;    
   }
 
+/*
 static double Integrate_dNi_dNj(const std::shared_ptr<D1Element>& N_i, const std::shared_ptr<D1Element>& N_j)
   {
   auto dN_i_dN_j = [&] (double x) -> double 
@@ -40,6 +41,7 @@ static double Integrate_dNi_dNj(const std::shared_ptr<D1Element>& N_i, const std
     return acc + Integrate::Gaussian_F_x(dN_i_dN_j,in.first,in.second);
     });
   }
+  */
 /*
 double Integrate_f_x_N_i(const function_x& f_x, const std::shared_ptr<D1Element>& lhv)
 {
@@ -56,8 +58,8 @@ return acc + Integrate::Gaussian_F_x(f_N_x,in.first,in.second);
 });  
 }
 */
-smart_function_x Integrate_f_x_t_Nj(const function_x_t& f_x_t, const std::shared_ptr<D1Element>& N_j);
 /*
+smart_function_x Integrate_f_x_t_Nj(const function_x_t& f_x_t, const std::shared_ptr<D1Element>& N_j);
 {
 return smart_function_x(f_x_t,N_j);
 }
@@ -65,6 +67,5 @@ return smart_function_x(f_x_t,N_j);
 double smart_function_x::operator() (double t) const
   {
   auto f_x = std::bind(f_x_t,std::placeholders::_1,t);
-
   return D1Integrate::Integrate_f_x_N_i(f_x,N_j) + tail_f_x(t);
   }

@@ -10,7 +10,7 @@ class Runge_Kutta_solver
      x = (x1, x2, .. , xn)T
 
          (a11, a12, .. , a1n)
-     A = (..................)
+     A = (..................) 
          (an1, an2, .. , ann)
 
          ( f1(x) )

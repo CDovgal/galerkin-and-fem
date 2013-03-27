@@ -68,7 +68,7 @@ function_x D1Element::build_test_function(double x0, double f0, double x1, doubl
 
   auto f_x = Build_function::get_linear_f_x(x0,f0,x1,f1);
 
-  return [&] (double x) -> double
+  return [=] (double x) -> double
     {
     if ( x >= x0 && x1 >= x)
       return f_x(x);
@@ -77,28 +77,31 @@ function_x D1Element::build_test_function(double x0, double f0, double x1, doubl
     };
   }
 
-function_x D1Element::get_support_function() const
+function_x D1Element::get_support_function()
   {
-  return [&](double x) -> double
+  if ( support_function == 0 )
     {
-    vector<function_x> Ni;
-
     double x0 = get_node()->get_x();
     double f0 = 1;
-
-    transform( begin_neighbor(), end_neighbor(), back_inserter(Ni), [&] (const shared_ptr<D1Element>& neighbor)
+    support_function = [=] (double x) -> double
       {
-      double x1 = neighbor->get_node()->get_x();
-      double f1 = 0;
+      vector<function_x> Ni;
 
-      return build_test_function(x0,f0,x1,f1) ;
-      });
+      transform( begin_neighbor(), end_neighbor(), back_inserter(Ni), [&] (const shared_ptr<D1Element>& neighbor)
+        {
+        double x1 = neighbor->get_node()->get_x();
+        double f1 = 0;
 
-    return accumulate( begin(Ni), end(Ni), 0.0, [&] (double acc, const function_x& f)
-      {
+        return build_test_function(x0,f0,x1,f1) ;
+        });
+
+      return accumulate( begin(Ni), end(Ni), 0.0, [=] (double acc, const function_x& f)
+        {
         return acc + f(x);
-      });
-    };
+        });
+      };
+    }
+  return support_function;
   }
 
 intervals D1Element::get_intervals() const
@@ -136,9 +139,17 @@ intervals D1Element::get_shared_interval(const std::shared_ptr<D1Element>& N_j) 
   return shared;
   }
 
-double interval_length(const std::pair<double,double>& p)
+double interval_length(const interval& p)
   {
   return abs(p.second - p.first);
+  }
+
+double intervals_length(const intervals& in)
+  {
+  return accumulate( begin(in), end(in), 0.0, [&] (double acc, const interval& in)
+    {
+    return acc + abs(in.second - in.first);
+    });
   }
 
 void debug_element_print(const vector<shared_ptr<D1Element>>& io_element_container)

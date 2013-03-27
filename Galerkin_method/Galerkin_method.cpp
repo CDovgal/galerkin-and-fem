@@ -8,6 +8,7 @@
 #include "calculus/Derivative.h"
 
 double Derivative::m_delta = 0.01;
+double Derivative::m_L = 1;
 
 using std::cout;
 using std::endl;
@@ -16,7 +17,7 @@ int _tmain(int argc, _TCHAR* argv[])
   {
   Wave_equation equation;
   handle_init(equation);
-
   cout << equation.get_solution() << endl;
+
   return 0;
   }

@@ -19,31 +19,33 @@ void handle_init(Wave_equation& equation)
   {
   double p_square = 1;
   double L = 1;
-  double step = 0.05;
+  double x_step = 0.1;
+  double t_step = 0.1;
+  size_t t_length = 1;
 
-  equation.init_doubles(p_square,L,step);
+  equation.init_doubles(p_square,L,x_step,t_step,t_length);
 
   function_x_t f_x_t = [] (double x, double t) -> double
     {
-    return 0;
+    return x+t;
     };
 
   function_x phi = [] (double x) -> double
     {
-    return sin(PI*x) + 0.5*sin(2*PI*x) + 0.25*sin(4*PI*x);
+    return 0.1;//sin(PI*x) + 0.5*sin(2*PI*x) + 0.25*sin(4*PI*x);
     };
   function_x psi = [] (double x) -> double
     {
-    return PI*( cos(PI*x) + cos(2*PI*x) + cos(4*PI*x) );
+    return 0.1;//PI*( cos(PI*x) + cos(2*PI*x) + cos(4*PI*x) );
     };
 
   function_x mu1 = [] (double t) -> double
     {
-    return 3*PI*sin(t);
+    return 0;//3*PI*sin(t);
     };
   function_x mu2 = [] (double t) -> double
     {
-    return 3*PI*(1-cos(t));
+    return 0;//3*PI*(1-cos(t));
     };
 
   equation.init_function(f_x_t,phi,psi,mu1,mu2);
@@ -51,12 +53,16 @@ void handle_init(Wave_equation& equation)
 
 void Wave_equation::init_doubles( double i_p_square,
                                  double i_L,
-                                 double i_step)
+                                 double _x_step,
+                                 double _t_step,
+                                 size_t _t_length)
   {
   p_square = i_p_square;
   L = i_L;
-  step = i_step;
-  elements_number = size_t( L/step + 1 );
+  x_step = _x_step;
+  elements_number = size_t( L/x_step + 1 );
+  t_step = _t_step;
+  t_length = _t_length;
   }
 
 void Wave_equation::init_function(const function_x_t& i_f_x_t,
@@ -86,10 +92,10 @@ matrix Wave_equation::get_C(const vector<shared_ptr<D1Element>>& element_contain
   }
 matrix Wave_equation::get_D(const vector<shared_ptr<D1Element>>& element_container) const
   {
-  matrix D(elements_number,elements_number);
+  matrix D(element_container.size(),element_container.size());
 
-  for(size_t i = 0; i < elements_number; ++i)
-    for(size_t j = 0; j < elements_number; ++j)
+  for(size_t i = 0; i < D.size1(); ++i)
+    for(size_t j = 0; j < D.size2(); ++j)
       {
       D(i,j) = get_element_D(element_container[i],element_container[j]);
       };;
@@ -98,24 +104,25 @@ matrix Wave_equation::get_D(const vector<shared_ptr<D1Element>>& element_contain
   }
 double Wave_equation::get_element_D(const shared_ptr<D1Element> N_i, const shared_ptr<D1Element> N_j) const
   {
-  double acc = 0;
+  double acc = 0.0;
 
-  auto support_function = N_i->get_support_function();
+  double shared_int = intervals_length(N_i->get_shared_interval(N_j));
 
-  if (N_i == N_j)
-    if ( N_i->get_node()->get_x() == 0  )
-      acc += Derivative::get_right_der(support_function)(0);
-    else if ( N_i->get_node()->get_x() == L )
-      acc += Derivative::get_left_der(support_function)(L);
+  if ( N_i == N_j )
+    {
+    if ( N_i->get_node()->get_x() == 0 )
+      acc += -1.0/shared_int;
+    else if ( N_i->is_last() )
+      acc += 1.0/shared_int;
+    }
 
-  //return p_square*(acc - D1Integrate::Integrate_dNi_dNj(N_i,N_j) );
-  return p_square*(acc - L/(step*step) );
+  return p_square* ( acc - D1Integrate::Integrate_dNi_dNj(N_i,N_j) );
   }
 vector<smart_function_x> Wave_equation::get_F(const vector<shared_ptr<D1Element>>& element_container) const
   {
   vector<smart_function_x> F;
 
-  transform( begin(element_container), end(element_container), back_inserter(F),[&] (const shared_ptr<D1Element>& N_j)
+  transform( begin(element_container), end(element_container), back_inserter(F),[=] (const shared_ptr<D1Element>& N_j)
     {
     return D1Integrate::Integrate_f_x_t_Nj(f_x_t,N_j);
     });
@@ -139,32 +146,13 @@ vector<smart_function_x> Wave_equation::get_P(const vector<smart_function_x>& F,
   {
   vector<smart_function_x> P;
 
-  //size_t i = 0;
+  size_t i = 0;
   size_t N = elements_number;
-
-  for (size_t i = 1; i < N-1; ++i)
-    {
-    auto tail = [&] (double t) -> double
-      {
-      double d0 = D(i,0)*mu1(t);
-      double dN = D(i,N-1)*mu2(t);
-
-      double c0 = C(i,0)*Derivative::get_second_mid_der(mu1)(t);
-      double cN = C(i,N-1)*Derivative::get_second_mid_der(mu2)(t);
-
-      return (d0 + dN) - ( c0 + cN );
-      };
-
-    auto copy = F[i];
-    copy.set_tail(tail);
-    P.push_back(copy);
-    }
-  /*
 
   transform( begin(F)+1, end(F)-1, back_inserter(P), [&] (const smart_function_x& f_x)
     {
     ++i;
-    auto tail = [&] (double t) -> double
+    auto tail = [=] (double t, size_t i, size_t N) -> double
       {
       double d0 = D(i,0)*mu1(t);
       double dN = D(i,N-1)*mu2(t);
@@ -175,12 +163,14 @@ vector<smart_function_x> Wave_equation::get_P(const vector<smart_function_x>& F,
       return (d0 + dN) - ( c0 + cN );
       };
 
+    auto aaa = bind(tail,placeholders::_1,i,N);
+
     auto copy = f_x;
-    copy.set_tail(tail);
+    copy.set_tail(aaa);
 
     return copy;
     });
-    */
+
   return P;
   }
 Function_vector Wave_equation::get_P_dash(const vector<smart_function_x>& P, const matrix& inverse_M) const
@@ -220,7 +210,7 @@ vector_t Wave_equation::get_initial_state(const vector<shared_ptr<D1Element>>& e
 matrix Wave_equation::get_solution()
   {
   vector<shared_ptr<D1Node>> node_container;
-  generate_node_container(0,L,step,node_container);
+  generate_node_container(0,L,x_step,node_container);
 
   std::vector<shared_ptr<D1Element>> element_container;
   generate_element_container(node_container,element_container);
@@ -246,14 +236,10 @@ matrix Wave_equation::get_solution()
   matrix main_matrix = b_identity_matrix(initial_state.size(),initial_state.size());
   for(size_t i = 0; i < N_dash.size1(); ++i)
     for(size_t j = 0; j < N_dash.size2(); ++j)
-      main_matrix(i,j) = N_dash(i,j);
-
-  cout << main_matrix << endl;
+      main_matrix(i+N_dash.size1(),j+N_dash.size2()) = N_dash(i,j);
 
   Runge_Kutta_solver rk_solver(main_matrix,initial_state,P_dash);
-  auto result = rk_solver.get_solution(step,elements_number);
+  auto result = rk_solver.get_solution(t_step,double(t_length)/t_step);
 
-  cout << result << endl;
-
-  return matrix(1,1);
+  return result;
   }

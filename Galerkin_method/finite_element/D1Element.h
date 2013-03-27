@@ -34,8 +34,12 @@ class D1Element
       {
       return std::end(mp_neighbors);
       }
+    inline bool is_last() const
+      {
+      return get_node()->get_x() != 0 && ( 1 == distance(begin_neighbor(),end_neighbor()) );
+      }
 
-    function_x get_support_function() const;
+    function_x get_support_function();
     intervals get_intervals() const;
     intervals get_shared_interval(const std::shared_ptr<D1Element>& N_j) const;
   private:
@@ -44,6 +48,8 @@ class D1Element
     std::shared_ptr<D1Node> mp_main_node;
 
     Element_neighbors mp_neighbors;
+
+    function_x support_function;
   };
 
 bool operator==(const D1Element& lhv, const D1Element& rhv);
@@ -53,6 +59,7 @@ void generate_element_container(const std::vector<std::shared_ptr<D1Node>>& node
 void fill_element_container(const std::vector<std::shared_ptr<D1Node>>& node_container, std::vector<std::shared_ptr<D1Element>>& io_element_container);
 void set_element_neighbor(std::vector<std::shared_ptr<D1Element>>& io_element_container);
 
-double interval_length(const std::pair<double,double>& p);
+double interval_length(const interval& p);
+double intervals_length(const intervals& p);
 
 void debug_element_print(const std::vector<std::shared_ptr<D1Element>>& io_element_container);
